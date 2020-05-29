@@ -5,11 +5,17 @@ function [lon_new,var_new] = lon360to180(lon,var)
 % Based on excerpt from Young-Oh's EOF_ENSO.m script.   
 % Nov 2019 G. Liu
      %% Find western/eastern longitudes
+     lon = squeeze(lon);
+     
      kxw=find(lon<180);
      kxe=find(lon>=180);
 
      % Concatenate western and eastern longitudes
-     lon_new=cat(1,lon(kxe)-360,lon(kxw));
+     if size(lon,1) == 1
+         lon_new=cat(2,lon(kxe)-360,lon(kxw));
+     else
+        lon_new=cat(1,lon(kxe)-360,lon(kxw));
+     end
      
      %% Permute the input variable to find the longitude dim
      sv = size(var);                  % Get dim sizes of variable
